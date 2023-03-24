@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import { Container, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,31 +14,49 @@ function FormRow() {
   return (
     <>
       <Grid item lg={1}>
-        <Item>1</Item>
+        <Button size="large" fullWidth variant="contained">
+            1
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>2</Item>
+        <Button size="large" fullWidth variant="contained">
+            2
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>3</Item>
+        <Button size="large" fullWidth variant="contained">
+            3
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>4</Item>
+        <Button size="large" fullWidth variant="contained">
+            4
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>5</Item>
+        <Button size="large" fullWidth variant="contained">
+            5
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>6</Item>
+        <Button size="large" fullWidth variant="contained">
+            6
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>7</Item>
+        <Button size="large" fullWidth variant="contained">
+            7
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>8</Item>
+        <Button size="large" fullWidth variant="contained">
+            8
+        </Button>
       </Grid>
       <Grid item lg={1}>
-        <Item>9</Item>
+        <Button size="large" fullWidth variant="contained">
+            9
+        </Button>
       </Grid>
     </>
   );
@@ -52,7 +67,7 @@ export default function ExerciseGrid() {
     <Container maxWidth="lg">
       <Typography align='center' variant='h3' component='h1'>Select Rows</Typography>
       <Box sx={{ flexGrow: 1 }} mt={2} wrap>
-        <Grid container justifyContent="center" spacing={2}>
+        <Grid container justifyContent="center" spacing={1}>
           <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
             <FormRow />
           </Grid>
