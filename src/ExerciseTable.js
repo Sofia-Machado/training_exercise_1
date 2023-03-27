@@ -12,6 +12,7 @@ export default function BasicTable() {
   const [isActive, setIsActive] = useState();
   const [selectedColumn, setSelectedColumn] = useState('')
   const [selectedIndex, setSelectedIndex] = useState('')
+  const [selectedCells, setSelectedCells] = useState([])
   
   const rows = [
     1,
@@ -22,12 +23,13 @@ export default function BasicTable() {
   ];
 
   function handleClasses(e, index) {
-    console.log('row ', e.target.id)
+    console.log('column ', e.target.id)
     let id = e.target.id;
-    setSelectedColumn(id);
-    
+    setSelectedColumn(e.target.id);
+    setSelectedCells([...selectedCells, {'column': e.target.id, 'row': index + 1}]);
     console.log('selected column ', selectedColumn);
-    console.log(index)
+    console.log('row ', index + 1);
+    console.log(selectedCells)
   }
 
   return (
@@ -53,49 +55,53 @@ export default function BasicTable() {
               key={index}
             >
               <TableCell align="center"
-              className={selectedColumn === index ? 'active' : ''}
-               onClick={(e) => handleClasses(e, index)}
+              className={''}
+               onClick={(e) => {
+                if (e.target.id === selectedColumn) {
+                  setClasses(!classes ? 'active' : '');
+                }
+                handleClasses(e, index)}}
                id={1}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={classes}
               onClick={(e) => handleClasses(e, index)}
               id={2}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={classes}
               onClick={(e) => handleClasses(e, index)}
               id={3}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={selectedColumn === index ? 'active' : ''}
               onClick={(e) => handleClasses(e, index)}
               id={4}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={selectedColumn === index ? 'active' : ''}
               onClick={(e) => handleClasses(e, index)}
               id={5}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={selectedColumn === index ? 'active' : ''}
               onClick={(e) => handleClasses(e, index)}
               id={6}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={selectedColumn === index ? 'active' : ''}
               onClick={(e) => handleClasses(e, index)}
               id={7}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={selectedColumn === row ? 'active' : ''}
+              className={selectedColumn === index ? 'active' : ''}
               onClick={(e) => handleClasses(e, index)}
               id={8}>
                 {row}
