@@ -1,108 +1,85 @@
-import * as React from 'react';
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
-
-function FormRow() {
-  return (
-    <>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            1
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            2
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            3
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            4
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            5
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            6
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            7
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            8
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            9
-        </Button>
-      </Grid>
-    </>
-  );
-}
-
-function LastFormRow() {
-  return (
-    <>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            1
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            2
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            3
-        </Button>
-      </Grid>
-      <Grid item lg={1}>
-        <Button size="large" fullWidth variant="outlined">
-            4
-        </Button>
-      </Grid>
-    </>
-  )
-}
+import { useState } from 'react';
+import { Box, Container, Grid, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 
 export default function ExerciseGrid() {
+  const [selectedRows, setSelectedRows] = useState('');
+
+  function handleSelected(event, newSelectionOfRows) {
+    console.log(event.target.value + ' changed');
+    console.log(selectedRows);
+    setSelectedRows(newSelectionOfRows);
+  }
+
+  const FormRow =  [
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='1' key='1'>
+              1
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='2' key='2'>
+              2
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='3' key='3'>
+              3
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='4' key='4'>
+              4
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='5' key='5'>
+              5
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='6' key='6'>
+              6
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='7' key='7'>
+              7
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='8' key='8'>
+              8
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='9' key='9'>
+              9
+          </ToggleButton>
+      ];
+
+  const LastFormRow = [
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='1' key='lastRow-1'>
+              1
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='2' key='lastRow-2'>
+              2
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='3' key='lastRow-3'>
+              3
+          </ToggleButton>,
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='4' key='lastRow-4'>
+              4
+          </ToggleButton>
+  ]
+
+  const select = {
+    value: selectedRows,
+    onChange: handleSelected,
+    exclusive: true
+  };
+
+ 
+
   return (
     <Container maxWidth="lg">
       <Typography align='center' variant='h3' component='h1'>Select Rows</Typography>
-      <Box sx={{ flexGrow: 1 }} mt={2} wrap>
-        <Grid container justifyContent="center" spacing={1}>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
-            <FormRow />
-          </Grid>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
-            <FormRow />
-          </Grid>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
-            <FormRow />
-          </Grid>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
-            <FormRow />
-          </Grid>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center", paddingRight:'360px' }} item spacing={1}>
-            <LastFormRow />
-          </Grid>
-        </Grid>
-      </Box>
+      <Stack spacing={2} alignItems="center">
+          <ToggleButtonGroup {...select} row={'first-row'}>
+            {FormRow}
+          </ToggleButtonGroup>
+            <ToggleButtonGroup {...select} >
+            {FormRow}
+          </ToggleButtonGroup>
+            <ToggleButtonGroup {...select} >
+            {FormRow}
+          </ToggleButtonGroup>
+          <ToggleButtonGroup {...select} sx={{ paddingRight: '395px'}} >
+            {LastFormRow}
+          </ToggleButtonGroup>
+      </Stack>
     </Container>
   );
 }
