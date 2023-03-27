@@ -12,7 +12,8 @@ export default function BasicTable() {
   const [isActive, setIsActive] = useState();
   const [selectedColumn, setSelectedColumn] = useState('')
   const [selectedIndex, setSelectedIndex] = useState('')
-  const [selectedCells, setSelectedCells] = useState([])
+  const [selectedRow, setSelectedRow] = useState('')
+  const [selectedCells, setSelectedCells] = useState([''])
   
   const rows = [
     1,
@@ -24,12 +25,11 @@ export default function BasicTable() {
 
   function handleClasses(e, index) {
     console.log('column ', e.target.id)
-    let id = e.target.id;
+    let newSelectedCells = {'column': parseInt(e.target.id, 10), 'row': index + 1};
+    setSelectedCells(newSelectedCells);
     setSelectedColumn(e.target.id);
-    setSelectedCells([...selectedCells, {'column': e.target.id, 'row': index + 1}]);
-    console.log('selected column ', selectedColumn);
-    console.log('row ', index + 1);
-    console.log(selectedCells)
+    setSelectedRow(index);
+    console.log(selectedCells);
   }
 
   return (
@@ -56,11 +56,7 @@ export default function BasicTable() {
             >
               <TableCell align="center"
               className={''}
-               onClick={(e) => {
-                if (e.target.id === selectedColumn) {
-                  setClasses(!classes ? 'active' : '');
-                }
-                handleClasses(e, index)}}
+               onClick={(e) => handleClasses(e, index)}
                id={1}>
                 {row}
               </TableCell>
