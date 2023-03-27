@@ -1,65 +1,83 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 
 function FormRow() {
   return (
     <>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             1
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             2
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             3
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             4
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             5
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             6
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             7
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             8
         </Button>
       </Grid>
       <Grid item lg={1}>
-        <Button size="large" fullWidth variant="contained">
+        <Button size="large" fullWidth variant="outlined">
             9
         </Button>
       </Grid>
     </>
   );
+}
+
+function LastFormRow() {
+  return (
+    <>
+      <Grid item lg={1}>
+        <Button size="large" fullWidth variant="outlined">
+            1
+        </Button>
+      </Grid>
+      <Grid item lg={1}>
+        <Button size="large" fullWidth variant="outlined">
+            2
+        </Button>
+      </Grid>
+      <Grid item lg={1}>
+        <Button size="large" fullWidth variant="outlined">
+            3
+        </Button>
+      </Grid>
+      <Grid item lg={1}>
+        <Button size="large" fullWidth variant="outlined">
+            4
+        </Button>
+      </Grid>
+    </>
+  )
 }
 
 export default function ExerciseGrid() {
@@ -80,8 +98,8 @@ export default function ExerciseGrid() {
           <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
             <FormRow />
           </Grid>
-          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center" }} item spacing={1}>
-            <FormRow />
+          <Grid container sx={{ display:'flex', justifyContent:"center", alignItems:"center", paddingRight:'360px' }} item spacing={1}>
+            <LastFormRow />
           </Grid>
         </Grid>
       </Box>
