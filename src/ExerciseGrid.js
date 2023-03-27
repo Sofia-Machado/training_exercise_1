@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { Box, Container, Grid, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import {useRef} from 'react';
+import { Container, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 
 export default function ExerciseGrid() {
-  const [selectedRows, setSelectedRows] = useState('');
+  const [selectedCells, setSelectedCells] = useState(['']);
+  const [warning, setWarning] = useState('');
+  const [selectedRow, setSelectedRow] = useState([]);
+  const ref = useRef('');
 
-  function handleSelected(event, newSelectionOfRows) {
-    console.log(event.target.value + ' changed');
-    console.log(selectedRows);
-    setSelectedRows(newSelectionOfRows);
+  function handleSelected(event, newSelectionOfCells) {
+    console.log(event.currentTarget.value)
+    setSelectedCells(newSelectionOfCells);
   }
 
   const FormRow =  [
@@ -17,7 +20,7 @@ export default function ExerciseGrid() {
           <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='2' key='2'>
               2
           </ToggleButton>,
-          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='3' key='3'>
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" color={warning} value='3' key='3'>
               3
           </ToggleButton>,
           <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='4' key='4'>
@@ -41,42 +44,43 @@ export default function ExerciseGrid() {
       ];
 
   const LastFormRow = [
-          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='1' key='lastRow-1'>
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='10' key='lastRow-1'>
               1
           </ToggleButton>,
-          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='2' key='lastRow-2'>
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='11' key='lastRow-2'>
               2
           </ToggleButton>,
-          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='3' key='lastRow-3'>
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='12' key='lastRow-3'>
               3
           </ToggleButton>,
-          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='4' key='lastRow-4'>
+          <ToggleButton size="large" sx={{width:'80px'}} variant="outlined" value='13' key='lastRow-4'>
               4
           </ToggleButton>
   ]
 
   const select = {
-    value: selectedRows,
+    value: selectedCells,
     onChange: handleSelected,
-    exclusive: true
   };
 
- 
 
   return (
     <Container maxWidth="lg">
-      <Typography align='center' variant='h3' component='h1'>Select Rows</Typography>
-      <Stack spacing={2} alignItems="center">
-          <ToggleButtonGroup {...select} row={'first-row'}>
+      <Typography mt={4} align='center' variant='h3' component='h1'>Select Rows</Typography>
+      <Stack spacing={2} mt={4} alignItems="center">
+          <ToggleButtonGroup {...select} id='row-1'>
             {FormRow}
           </ToggleButtonGroup>
-            <ToggleButtonGroup {...select} >
+          <ToggleButtonGroup {...select} id='row-2' >
             {FormRow}
           </ToggleButtonGroup>
-            <ToggleButtonGroup {...select} >
+          <ToggleButtonGroup {...select} id='row-3' >
             {FormRow}
           </ToggleButtonGroup>
-          <ToggleButtonGroup {...select} sx={{ paddingRight: '395px'}} >
+          <ToggleButtonGroup {...select} id='row-4' >
+            {FormRow}
+          </ToggleButtonGroup>
+          <ToggleButtonGroup {...select} sx={{ paddingRight: '395px'}}  id='row 5' >
             {LastFormRow}
           </ToggleButtonGroup>
       </Stack>

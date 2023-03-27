@@ -1,12 +1,12 @@
 import './App.css';
 import ExerciseGrid from './ExerciseGrid';
-import ExerciseToggleButtons from './ExerciseToggleButtons';
+import ExerciseTable from './ExerciseTable';
 
 function App() {
   return (
     <>
       <ExerciseGrid />
-      <ExerciseToggleButtons />
+      <ExerciseTable />
     </>
   );
 }
