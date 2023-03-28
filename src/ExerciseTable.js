@@ -27,21 +27,24 @@ export default function BasicTable() {
 
   function handleSelectedCells(e, index) {
     let newSelectedCells = [];
+    console.log(e.target.className)
     //iterate through selected cells
-    for (let cell of selectedCells) {
-      //if cell exists
-      if (cell.column === parseInt(e.target.id, 10) && cell.row === index) {
-        //save id of the obj in the selectedCells array
-        let idOfCell = selectedCells.indexOf(cell);
-        //filter the id
-        newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-        //setLimit(newSelectedCells);
-        return setSelectedCells(newSelectedCells);
+    if (e.target.className.includes('hover') || e.target.className.includes('active') || e.target.className.includes('highlight')) {
+      for (let cell of selectedCells) {
+        //if cell exists
+        if (cell.column === parseInt(e.target.id, 10) && cell.row === index) {
+          //save id of the obj in the selectedCells array
+          let idOfCell = selectedCells.indexOf(cell);
+          //filter the id
+          newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
+          //setLimit(newSelectedCells);
+          return setSelectedCells(newSelectedCells);
+        }
       }
+      newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
+      //setLimit(newSelectedCells);
+      setSelectedCells(newSelectedCells);
     }
-    newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
-    //setLimit(newSelectedCells);
-    setSelectedCells(newSelectedCells);
   }
 
   //save selected cells
@@ -66,24 +69,7 @@ export default function BasicTable() {
    useEffect(() => {
     setLimit(selectedCells);
   }, [selectedCells])
-
-  function isCellSelected(rowId, columnId) {
-    //select cell
-    let classes = 'hover ';
-    selectedCells.forEach(cell => {
-      firstLimit.forEach(id => {
-        if (id === columnId) {
-          classes += ' highlight';
-        }
-        if (cell.row === rowId && cell.column === columnId) {
-          classes += ' active';
-        }
-      })
-    })
-    //highlightcells
-    return classes;
-  }
-  
+ 
 
   function isCellSelected(rowId, columnId) {
     //select cell
@@ -96,9 +82,11 @@ export default function BasicTable() {
         if (cell.row === rowId && cell.column === columnId) {
           classes = classes.replace('highlight', 'active');
         }
+        if (cell.row === rowId && cell.column !== columnId) {
+          classes = classes.replace('highlight', '');
+        }
       })
     })
-    //highlightcells
     return classes;
   }
 
