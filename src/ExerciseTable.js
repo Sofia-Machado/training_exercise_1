@@ -52,7 +52,7 @@ export default function BasicTable() {
       console.log(limit);
   }
  
-   useEffect(() => {
+  useEffect(() => {
     if (selectedCells.length > 0) {
       createLimit(selectedCells[0]['column'], setLimit);
     } else {
@@ -66,7 +66,7 @@ export default function BasicTable() {
       console.log('limit = ',limit)
       let newColumnLimit = limit.filter(column => newLimit.includes(column))
       console.log('hello ',newColumnLimit)
-      setLimit(limit.filter(column => newLimit.includes(column)))
+      setLimit(newColumnLimit)
 
     }
   }, [selectedCells])
