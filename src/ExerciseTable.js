@@ -18,16 +18,20 @@ export default function BasicTable() {
     5
   ];
 
-  function handleClasses(e, index) {
-    console.log(selectedCells.includes({'column': parseInt(e.target.id, 10), 'row': index}))
+  function handleSelectedCells(e, index) {
     let newSelectedCells = [];
-    if (selectedCells.includes({'column': parseInt(e.target.id, 10), 'row': index})) {
-      newSelectedCells = selectedCells.filter(cell => {
-      return cell === {'column': parseInt(e.target.id, 10), 'row': index}
-    })} else {
-      newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
+    for (let cell of selectedCells) {
+      if (cell.column === parseInt(e.target.id, 10) && cell.row === index) {
+        let idOfCell = selectedCells.indexOf(cell);
+        console.log('includes this cell ', selectedCells.indexOf(cell))
+        newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell)
+        console.log('filter ', newSelectedCells)
+        return setSelectedCells(newSelectedCells);
+      }
     }
+    newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
     setSelectedCells(newSelectedCells);
+
     console.log(selectedCells);
   }
 
@@ -39,12 +43,12 @@ export default function BasicTable() {
       if (cell.row === rowId && cell.column === columnId) {
         classes = 'active';
       }
-      if (cell.column === columnId && cell.row !== rowId) {
+     /*  if (cell.column === columnId && cell.row !== rowId) {
         classes = 'highlight';
       }
       if (cell.column === (columnId + 2) && cell.column === (columnId - 2)) {
         classes = 'highlight';
-      }
+      } */
     })
     //highlightcells
   
@@ -75,55 +79,55 @@ export default function BasicTable() {
             >
               <TableCell align="center"
               className={isCellSelected(index, 1)}
-               onClick={(e) => handleClasses(e, index)}
+               onClick={(e) => handleSelectedCells(e, index)}
                id={1}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 2)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={2}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 3)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={3}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 4)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={4}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 5)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={5}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 6)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={6}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 7)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={7}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 8)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={8}>
                 {row}
               </TableCell>
               <TableCell align="center"
               className={isCellSelected(index, 9)}
-              onClick={(e) => handleClasses(e, index)}
+              onClick={(e) => handleSelectedCells(e, index)}
               id={9}>
                 {row}
               </TableCell>
