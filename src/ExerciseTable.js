@@ -66,8 +66,8 @@ export default function BasicTable() {
       console.log('limit = ',limit)
       let newColumnLimit = limit.filter(column => newLimit.includes(column))
       console.log('hello ',newColumnLimit)
-      setLimit(newColumnLimit)
-      
+      setLimit(limit.filter(column => newLimit.includes(column)))
+
     }
   }, [selectedCells])
  
@@ -108,103 +108,154 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
-            <TableRow
-            className={''}
-              key={index}
-            >
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(1) ? isCellSelected(index, 1) : ''}
-               onClick={(e) => {
-                 if (limit.length === 0 || limit.includes(1)) {
-                   handleSelectedCells(e, index)
-                 }
-               }}
-               id={1}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(2) ? isCellSelected(index, 2) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(2)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={2}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(3) ? isCellSelected(index, 3) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(3)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={3}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(4) ? isCellSelected(index, 4) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(4)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={4}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(5) ? isCellSelected(index, 5) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(5)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={5}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(6) ? isCellSelected(index, 6) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(6)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={6}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(7) ? isCellSelected(index, 7) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(7)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={7}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(8) ? isCellSelected(index, 8) : ''}
-              onClick={(e) => {
-                if (limit.length === 0 || limit.includes(8)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={8}>
-                {row}
-              </TableCell>
-              <TableCell align="center"
-              className={limit.length === 0 || limit.includes(9) ? isCellSelected(index, 9) : ''}
-              onClick={(e) =>  {
-                if (limit.length === 0 || limit.includes(9)) {
-                  handleSelectedCells(e, index)
-                }
-              }}
-              id={9}>
-                {row}
-              </TableCell>
-            </TableRow>
-          ))}
+          {rows.map((row, index) => {
+            if (index === 3) {
+              return (
+                <TableRow
+                  className={''}
+                    key={index}
+                  >
+                    <TableCell align="center"
+                    className={limit.length === 0 || limit.includes(1) ? isCellSelected(index, 1) : ''}
+                    onClick={(e) => {
+                      if (limit.length === 0 || limit.includes(1)) {
+                        handleSelectedCells(e, index)
+                      }
+                    }}
+                    id={1}>
+                      {row}
+                    </TableCell>
+                    <TableCell align="center"
+                    className={limit.length === 0 || limit.includes(2) ? isCellSelected(index, 2) : ''}
+                    onClick={(e) => {
+                      if (limit.length === 0 || limit.includes(2)) {
+                        handleSelectedCells(e, index)
+                      }
+                    }}
+                    id={2}>
+                      {row}
+                    </TableCell>
+                    <TableCell align="center"
+                    className={limit.length === 0 || limit.includes(3) ? isCellSelected(index, 3) : ''}
+                    onClick={(e) => {
+                      if (limit.length === 0 || limit.includes(3)) {
+                        handleSelectedCells(e, index)
+                      }
+                    }}
+                    id={3}>
+                      {row}
+                    </TableCell>
+                    <TableCell align="center"
+                    className={limit.length === 0 || limit.includes(4) ? isCellSelected(index, 4) : ''}
+                    onClick={(e) => {
+                      if (limit.length === 0 || limit.includes(4)) {
+                        handleSelectedCells(e, index)
+                      }
+                    }}
+                    id={4}>
+                      {row}
+                    </TableCell>
+                  </TableRow>
+                )
+              } 
+              return (
+                <TableRow
+                className={''}
+                  key={index}
+                >
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(1) ? isCellSelected(index, 1) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(1)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={1}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(2) ? isCellSelected(index, 2) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(2)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={2}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(3) ? isCellSelected(index, 3) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(3)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={3}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(4) ? isCellSelected(index, 4) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(4)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={4}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(5) ? isCellSelected(index, 5) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(5)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={5}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(6) ? isCellSelected(index, 6) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(6)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={6}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(7) ? isCellSelected(index, 7) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(7)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={7}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(8) ? isCellSelected(index, 8) : ''}
+                  onClick={(e) => {
+                    if (limit.length === 0 || limit.includes(8)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={8}>
+                    {row}
+                  </TableCell>
+                  <TableCell align="center"
+                  className={limit.length === 0 || limit.includes(9) ? isCellSelected(index, 9) : ''}
+                  onClick={(e) =>  {
+                    if (limit.length === 0 || limit.includes(9)) {
+                      handleSelectedCells(e, index)
+                    }
+                  }}
+                  id={9}>
+                    {row}
+                  </TableCell>
+                </TableRow>
+                )
+                })}
         </TableBody>
       </Table>
     </TableContainer>
