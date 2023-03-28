@@ -67,7 +67,6 @@ export default function BasicTable() {
       let newColumnLimit = limit.filter(column => newLimit.includes(column))
       console.log('hello ',newColumnLimit)
       setLimit(newColumnLimit)
-
     }
   }, [selectedCells])
  
@@ -76,17 +75,21 @@ export default function BasicTable() {
     //select cell
     let classes = 'hover';
     selectedCells.forEach(cell => {
-      limit.forEach(id => {
-        if (id === columnId) {
-          classes = classes.replace('hover', 'highlight');
-        }
-        if (cell.row === rowId && cell.column === columnId) {
-          classes = classes.replace('highlight', 'active');
-        }
-        if (cell.row === rowId && cell.column !== columnId) {
-          classes = classes.replace('highlight', '');
-        }
-      })
+      if (cell.row !== 3) {
+        limit.forEach(id => {
+          if (id === columnId) {
+            classes = classes.replace('hover', 'highlight');
+          }
+          if (cell.row === rowId && cell.column === columnId) {
+            classes = classes.replace('highlight', 'active');
+          }
+          if (cell.row === rowId && cell.column !== columnId) {
+            classes = classes.replace('highlight', '');
+          }
+        })
+      } else {
+
+      }
     })
     return classes;
   }
@@ -116,42 +119,26 @@ export default function BasicTable() {
                     key={index}
                   >
                     <TableCell align="center"
-                    className={limit.length === 0 || limit.includes(1) ? isCellSelected(index, 1) : ''}
-                    onClick={(e) => {
-                      if (limit.length === 0 || limit.includes(1)) {
-                        handleSelectedCells(e, index)
-                      }
-                    }}
+                    className={isCellSelected(index, 1)}
+                    onClick={(e) => handleSelectedCells(e, index)}
                     id={1}>
                       {row}
                     </TableCell>
                     <TableCell align="center"
-                    className={limit.length === 0 || limit.includes(2) ? isCellSelected(index, 2) : ''}
-                    onClick={(e) => {
-                      if (limit.length === 0 || limit.includes(2)) {
-                        handleSelectedCells(e, index)
-                      }
-                    }}
+                    className={isCellSelected(index, 2)}
+                    onClick={(e) => handleSelectedCells(e, index)}
                     id={2}>
                       {row}
                     </TableCell>
                     <TableCell align="center"
-                    className={limit.length === 0 || limit.includes(3) ? isCellSelected(index, 3) : ''}
-                    onClick={(e) => {
-                      if (limit.length === 0 || limit.includes(3)) {
-                        handleSelectedCells(e, index)
-                      }
-                    }}
+                    className={isCellSelected(index, 3)}
+                    onClick={(e) => handleSelectedCells(e, index)}
                     id={3}>
                       {row}
                     </TableCell>
                     <TableCell align="center"
-                    className={limit.length === 0 || limit.includes(4) ? isCellSelected(index, 4) : ''}
-                    onClick={(e) => {
-                      if (limit.length === 0 || limit.includes(4)) {
-                        handleSelectedCells(e, index)
-                      }
-                    }}
+                    className={isCellSelected(index, 4)}
+                    onClick={(e) => handleSelectedCells(e, index)}
                     id={4}>
                       {row}
                     </TableCell>
