@@ -35,12 +35,12 @@ export default function BasicTable() {
         let idOfCell = selectedCells.indexOf(cell);
         //filter the id
         newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-        firstLimitation(newSelectedCells);
+        
         return setSelectedCells(newSelectedCells);
       }
     }
     newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
-    firstLimitation(newSelectedCells);
+    
     setSelectedCells(newSelectedCells);
   }
 
@@ -52,14 +52,16 @@ export default function BasicTable() {
     }
   }
 
+  useEffect(() => {
+    firstLimitation(selectedCells);
+  }, [selectedCells])
+
   function isCellSelected(rowId, columnId) {
     //select cell
     let classes = '';
-    
     selectedCells.forEach(cell => {
       firstSelection.forEach(id => {
-        if (id === cell.column) {
-          console.log(id)
+        if (id === columnId) {
           classes = 'highlight';
         }
       })

@@ -19,6 +19,6 @@ code {
   background-color: lightgoldenrodyellow;
 }
 
-td:hover {
+.hover {
   background-color: lightblue;
 }
