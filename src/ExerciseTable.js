@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 
 export default function BasicTable() {
   const [selectedCells, setSelectedCells] = useState([]);
-  const [firstSelection, setFirstSelection] = useState([])
+  const [firstLimit, setFirstLimit] = useState([])
   
   const rows = [
     1,
@@ -21,8 +21,8 @@ export default function BasicTable() {
 
   /* useEffect(() => {
     let columnId = selectedCells[0][0];
-    setFirstSelection([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2])
-    console.log(firstSelection);
+    setFirstLimit([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2])
+    console.log(firstLimit);
   }, [selectedCells]) */
 
   function handleSelectedCells(e, index) {
@@ -35,33 +35,43 @@ export default function BasicTable() {
         let idOfCell = selectedCells.indexOf(cell);
         //filter the id
         newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-        //firstLimitation(newSelectedCells);
+        //setLimit(newSelectedCells);
         return setSelectedCells(newSelectedCells);
       }
     }
     newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
-    //firstLimitation(newSelectedCells);
+    //setLimit(newSelectedCells);
     setSelectedCells(newSelectedCells);
   }
 
   //save selected cells
-  function firstLimitation(newSelectedCells) {
+  function setLimit(newSelectedCells) {
     if (newSelectedCells.length > 0) {
       let columnId = newSelectedCells[0]['column'];
-      setFirstSelection([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2]);
-      console.log(firstSelection);
+      if (columnId === 6) {
+        setFirstLimit([columnId - 2, columnId - 1, columnId, columnId + 1]);
+      } if (columnId === 7) {
+        setFirstLimit([columnId - 2, columnId - 1, columnId]);
+      } if (columnId === 9) {
+        setFirstLimit([columnId])
+      } else {
+        setFirstLimit([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2]);
+      }
+      console.log(firstLimit);
+    } else {
+      setFirstLimit([]);
     }
   }
  
    useEffect(() => {
-    firstLimitation(selectedCells);
+    setLimit(selectedCells);
   }, [selectedCells])
 
   function isCellSelected(rowId, columnId) {
     //select cell
     let classes = 'hover ';
     selectedCells.forEach(cell => {
-      firstSelection.forEach(id => {
+      firstLimit.forEach(id => {
         if (id === columnId) {
           classes += ' highlight';
         }
@@ -79,7 +89,7 @@ export default function BasicTable() {
     //select cell
     let classes = 'hover';
     selectedCells.forEach(cell => {
-      firstSelection.forEach(id => {
+      firstLimit.forEach(id => {
         if (id === columnId) {
           classes = classes.replace('hover', 'highlight');
         }
@@ -115,9 +125,9 @@ export default function BasicTable() {
               key={index}
             >
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(1) ? isCellSelected(index, 1) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(1) ? isCellSelected(index, 1) : ''}
                onClick={(e) => {
-                 if (firstSelection.length < 1 || firstSelection.includes(1)) {
+                 if (firstLimit.length === 0 || firstLimit.includes(1)) {
                    handleSelectedCells(e, index)
                  }
                }}
@@ -125,9 +135,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(2) ? isCellSelected(index, 2) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(2) ? isCellSelected(index, 2) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 0 || firstSelection.includes(2)) {
+                if (firstLimit.length === 0 || firstLimit.includes(2)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -135,9 +145,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(3) ? isCellSelected(index, 3) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(3) ? isCellSelected(index, 3) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(3)) {
+                if (firstLimit.length === 0 || firstLimit.includes(3)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -145,9 +155,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(4) ? isCellSelected(index, 4) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(4) ? isCellSelected(index, 4) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(4)) {
+                if (firstLimit.length === 0 || firstLimit.includes(4)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -155,9 +165,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(5) ? isCellSelected(index, 5) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(5) ? isCellSelected(index, 5) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(5)) {
+                if (firstLimit.length === 0 || firstLimit.includes(5)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -165,9 +175,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(6) ? isCellSelected(index, 6) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(6) ? isCellSelected(index, 6) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(6)) {
+                if (firstLimit.length === 0 || firstLimit.includes(6)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -175,9 +185,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(7) ? isCellSelected(index, 7) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(7) ? isCellSelected(index, 7) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(7)) {
+                if (firstLimit.length === 0 || firstLimit.includes(7)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -185,9 +195,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(8) ? isCellSelected(index, 8) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(8) ? isCellSelected(index, 8) : ''}
               onClick={(e) => {
-                if (firstSelection.length < 1 || firstSelection.includes(8)) {
+                if (firstLimit.length === 0 || firstLimit.includes(8)) {
                   handleSelectedCells(e, index)
                 }
               }}
@@ -195,9 +205,9 @@ export default function BasicTable() {
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={firstSelection.length < 1 || firstSelection.includes(9) ? isCellSelected(index, 9) : ''}
+              className={firstLimit.length === 0 || firstLimit.includes(9) ? isCellSelected(index, 9) : ''}
               onClick={(e) =>  {
-                if (firstSelection.length < 1 || firstSelection.includes(9)) {
+                if (firstLimit.length === 0 || firstLimit.includes(9)) {
                   handleSelectedCells(e, index)
                 }
               }}
