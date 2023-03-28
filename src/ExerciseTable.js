@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 
 export default function BasicTable() {
   const [selectedCells, setSelectedCells] = useState([]);
+  const [firstSelection, setFirstSelection] = useState([])
   
   const rows = [
     1,
@@ -18,40 +19,55 @@ export default function BasicTable() {
     5
   ];
 
+  /* useEffect(() => {
+    let columnId = selectedCells[0][0];
+    setFirstSelection([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2])
+    console.log(firstSelection);
+  }, [selectedCells]) */
+
   function handleSelectedCells(e, index) {
     let newSelectedCells = [];
+    //iterate through selected cells
     for (let cell of selectedCells) {
+      //if cell exists
       if (cell.column === parseInt(e.target.id, 10) && cell.row === index) {
+        //save id of the obj in the selectedCells array
         let idOfCell = selectedCells.indexOf(cell);
-        console.log('includes this cell ', selectedCells.indexOf(cell))
-        newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell)
-        console.log('filter ', newSelectedCells)
+        //filter the id
+        newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
+        firstLimitation(newSelectedCells);
         return setSelectedCells(newSelectedCells);
       }
     }
     newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
+    firstLimitation(newSelectedCells);
     setSelectedCells(newSelectedCells);
-
-    console.log(selectedCells);
   }
 
+  //save selected cells
+  function firstLimitation(newSelectedCells) {
+    if (newSelectedCells.length > 0) {
+      let columnId = newSelectedCells[0]['column'];
+      setFirstSelection([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2]);
+    }
+  }
 
   function isCellSelected(rowId, columnId) {
     //select cell
     let classes = '';
+    
     selectedCells.forEach(cell => {
+      firstSelection.forEach(id => {
+        if (id === cell.column) {
+          console.log(id)
+          classes = 'highlight';
+        }
+      })
       if (cell.row === rowId && cell.column === columnId) {
         classes = 'active';
       }
-     /*  if (cell.column === columnId && cell.row !== rowId) {
-        classes = 'highlight';
-      }
-      if (cell.column === (columnId + 2) && cell.column === (columnId - 2)) {
-        classes = 'highlight';
-      } */
     })
     //highlightcells
-  
     return classes;
   }
 

@@ -15,6 +15,9 @@ code {
 .active {
   background-color: lightsalmon;
 }
+.highlight {
+  background-color: lightgoldenrodyellow;
+}
 
 td:hover {
   background-color: lightblue;
