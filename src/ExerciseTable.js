@@ -39,38 +39,35 @@ export default function BasicTable() {
   }
 
   //save selected cells
-  function createLimit(newSelectedCells) {
-    if (newSelectedCells.length > 0) {
-      let columnId = newSelectedCells[0]['column'];
-      if (columnId === 6) {
-        setLimit([columnId - 2, columnId - 1, columnId, columnId + 1]);
-      } if (columnId === 7) {
-        setLimit([columnId - 2, columnId - 1, columnId]);
-      } if (columnId === 9) {
-        setLimit([columnId])
+  function createLimit(collumnCell, limitfunction) {
+      if (collumnCell === 6) {
+        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1]);
+      } if (collumnCell === 7) {
+        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell]);
+      } if (collumnCell === 9) {
+        limitfunction([collumnCell])
       } else {
-        setLimit([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2]);
+        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2]);
       }
       console.log(limit);
-    } else {
-      setLimit([]);
-    }
   }
  
    useEffect(() => {
-    
-    createLimit(selectedCells);
+    if (selectedCells.length > 0) {
+      createLimit(selectedCells[0]['column'], setLimit);
+    } else {
+      setLimit([]);
+    }
     //check column id of the last selected cell
     if (selectedCells.length > 1) {
       let columnId = selectedCells[selectedCells.length - 1]['column']
-      console.log('qieiztuk ',limit.indexOf(columnId))
-      if (limit.includes(columnId + 2)) {
-
-      }
-      /* if (limit.indexOf(columnId) === 0) {
-        let newLimit = limit.slice(0, limit.length -2);
-        setLimit(newLimit)
-      } */
+      createLimit(columnId, setNewLimit)
+      console.log('new limit = ',newLimit)
+      console.log('limit = ',limit)
+      let newColumnLimit = limit.filter(column => newLimit.includes(column))
+      console.log('hello ',newColumnLimit)
+      setLimit(newColumnLimit)
+      
     }
   }, [selectedCells])
  
