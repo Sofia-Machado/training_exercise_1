@@ -12,13 +12,14 @@ code {
     monospace;
 }
 
-.active {
-  background-color: lightsalmon;
-}
 .highlight {
   background-color: lightgoldenrodyellow;
 }
-
-.hover {
+.active {
+  background-color: lightsalmon;
+}
+.highlight:hover,
+.active:hover,
+.hover:hover {
   background-color: lightblue;
 }

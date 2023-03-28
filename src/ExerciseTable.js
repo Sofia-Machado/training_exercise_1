@@ -35,12 +35,12 @@ export default function BasicTable() {
         let idOfCell = selectedCells.indexOf(cell);
         //filter the id
         newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-        
+        //firstLimitation(newSelectedCells);
         return setSelectedCells(newSelectedCells);
       }
     }
     newSelectedCells = [...selectedCells, {'column': parseInt(e.target.id, 10), 'row': index}];
-    
+    //firstLimitation(newSelectedCells);
     setSelectedCells(newSelectedCells);
   }
 
@@ -49,25 +49,44 @@ export default function BasicTable() {
     if (newSelectedCells.length > 0) {
       let columnId = newSelectedCells[0]['column'];
       setFirstSelection([columnId - 2, columnId - 1, columnId, columnId + 1, columnId + 2]);
+      console.log(firstSelection);
     }
   }
-
-  useEffect(() => {
+ 
+   useEffect(() => {
     firstLimitation(selectedCells);
   }, [selectedCells])
 
   function isCellSelected(rowId, columnId) {
     //select cell
-    let classes = '';
+    let classes = 'hover ';
     selectedCells.forEach(cell => {
       firstSelection.forEach(id => {
         if (id === columnId) {
-          classes = 'highlight';
+          classes += ' highlight';
+        }
+        if (cell.row === rowId && cell.column === columnId) {
+          classes += ' active';
         }
       })
-      if (cell.row === rowId && cell.column === columnId) {
-        classes = 'active';
-      }
+    })
+    //highlightcells
+    return classes;
+  }
+  
+
+  function isCellSelected(rowId, columnId) {
+    //select cell
+    let classes = 'hover';
+    selectedCells.forEach(cell => {
+      firstSelection.forEach(id => {
+        if (id === columnId) {
+          classes = classes.replace('hover', 'highlight');
+        }
+        if (cell.row === rowId && cell.column === columnId) {
+          classes = classes.replace('highlight', 'active');
+        }
+      })
     })
     //highlightcells
     return classes;
@@ -96,56 +115,92 @@ export default function BasicTable() {
               key={index}
             >
               <TableCell align="center"
-              className={isCellSelected(index, 1)}
-               onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(1) ? isCellSelected(index, 1) : ''}
+               onClick={(e) => {
+                 if (firstSelection.length < 1 || firstSelection.includes(1)) {
+                   handleSelectedCells(e, index)
+                 }
+               }}
                id={1}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 2)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(2) ? isCellSelected(index, 2) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 0 || firstSelection.includes(2)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={2}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 3)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(3) ? isCellSelected(index, 3) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(3)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={3}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 4)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(4) ? isCellSelected(index, 4) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(4)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={4}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 5)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(5) ? isCellSelected(index, 5) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(5)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={5}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 6)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(6) ? isCellSelected(index, 6) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(6)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={6}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 7)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(7) ? isCellSelected(index, 7) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(7)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={7}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 8)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(8) ? isCellSelected(index, 8) : ''}
+              onClick={(e) => {
+                if (firstSelection.length < 1 || firstSelection.includes(8)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={8}>
                 {row}
               </TableCell>
               <TableCell align="center"
-              className={isCellSelected(index, 9)}
-              onClick={(e) => handleSelectedCells(e, index)}
+              className={firstSelection.length < 1 || firstSelection.includes(9) ? isCellSelected(index, 9) : ''}
+              onClick={(e) =>  {
+                if (firstSelection.length < 1 || firstSelection.includes(9)) {
+                  handleSelectedCells(e, index)
+                }
+              }}
               id={9}>
                 {row}
               </TableCell>
