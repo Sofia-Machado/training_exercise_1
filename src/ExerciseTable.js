@@ -61,7 +61,7 @@ export default function BasicTable() {
   }
 
     //check if cell is selected and return class
-    function isCellSelected(e.rowId, columnId) {
+    function isCellSelected(rowId, columnId) {
       let classes = 'hover';
       selectedCells.forEach(cell => {
         if (rowId === 3) {
