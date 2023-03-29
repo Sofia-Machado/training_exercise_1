@@ -12,7 +12,7 @@ export default function BasicTable() {
   const [selectedCells, setSelectedCells] = useState([]);
   const [limit, setLimit] = useState([]);
   const [newLimit, setNewLimit] = useState([]);
-  const [total, setTotal] = useState('');
+  let total = 0;
   
   const headers = [
     'Column 1',
@@ -56,12 +56,12 @@ export default function BasicTable() {
       if (rowIndex !== 3) {
         checkLimit(newSelectedCells);
       }
-      return setSelectedCells(newSelectedCells);
     }
+    return setSelectedCells(newSelectedCells);
   }
 
     //check if cell is selected and return class
-    function isCellSelected(rowId, columnId) {
+    function isCellSelected(e.rowId, columnId) {
       let classes = 'hover';
       selectedCells.forEach(cell => {
         if (rowId === 3) {
@@ -80,7 +80,7 @@ export default function BasicTable() {
             if (cell.row === rowId && cell.column === columnId) {
               classes = classes.replace('highlight', 'active');
             }
-            if (cell.row === rowId && cell.column !== columnId) {
+            if (cell.row === rowId && cell.column !== id) {
               classes = classes.replace('highlight', '');
             }
           })
@@ -90,42 +90,42 @@ export default function BasicTable() {
     }
 
   //save limitation
-  function createLimit(collumnCell, limitfunction) {
+  function createLimit(collumnCell) {
       if (collumnCell === 6) {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
       } if (collumnCell === 7) {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell];
       } if (collumnCell === 9) {
-        return limitfunction([collumnCell]);
+        return [collumnCell];
       } else {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       }
   }
  
   //create limitation
   function checkLimit(cells) {
+    let limitValue;
     if (cells.length === 1) {
       if (cells[0]['row'] === 3) {
         console.log('hello')
-        setLimit([]);
+        limitValue = [];
       }
-      createLimit(cells[0]['column'], setLimit);
+      limitValue = createLimit(cells[0]['column']);
     }
     if (cells.length >= 2) {
-      createLimit(cells[cells.length - 1]['column'], setNewLimit)
-      let newColumnLimit = limit.filter(column => newLimit.includes(column))
-      setLimit(newColumnLimit);
+      setNewLimit(createLimit(cells[cells.length - 1]['column']));
+      limitValue = limit.filter(column => newLimit.includes(column))
+      console.log('limit value', limitValue)
     }
+    return setLimit(limitValue);
   }
 
   //generate random number
-  useEffect(() => {
    if (selectedCells.length === 4) {
-    setTotal(Math.floor(Math.random() * 100) + 1);
+    total = Math.floor(Math.random() * 100) + 1;
    } else {
-    setTotal(0);
+    total =  0;
    }
-  }, [selectedCells])
 
   return (
     <Container>
@@ -144,13 +144,13 @@ export default function BasicTable() {
             return (
                   <TableRow
                   className={''}
-                    key={rowIndex}
+                    key={`row ${rowIndex}`}
                   >
                     {row.map((cell, columnIndex) => {
                       if (rowIndex === 3) {
                         return (
                           <TableCell align="center"
-                          key={columnIndex}
+                          key={`column ${columnIndex}`}
                           className={isCellSelected(rowIndex, columnIndex)}
                           onClick={(e) => {
                               handleSelectedCells(e, columnIndex, rowIndex)
@@ -160,7 +160,7 @@ export default function BasicTable() {
                       }
                     return (
                       <TableCell align="center"
-                      key={columnIndex}
+                      key={`column ${columnIndex}`}
                       className={limit.length === 0 || limit.includes(columnIndex) ? isCellSelected(rowIndex, columnIndex) : ''}
                       onClick={(e) => {
                         if (limit.length === 0 || limit.includes(columnIndex)) {
