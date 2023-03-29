@@ -44,7 +44,7 @@ export default function BasicTable() {
           let idOfCell = selectedCells.indexOf(cell);
           //filter the id
           newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-          if ((selectedCells[selectedCells.length - 1]['row'] !== 3)) {
+          if (rowIndex !== 3) {
             checkLimit(newSelectedCells);
           }
           return setSelectedCells(newSelectedCells);
@@ -103,21 +103,24 @@ export default function BasicTable() {
  
   //create limitation
   function checkLimit (cells) {
-    if (cells.length > 0) {
+    if (cells.length === 1) {
+      console.log(cells[0]['row'])
+      if (cells[0]['row'] === '3') {
+        setLimit([]);
+      }
       createLimit(cells[0]['column'], setLimit);
+      console.log('limit ', limit)
     }
-    if (cells.length > 1) {
+    if (cells.length >= 2) {
       createLimit(cells[cells.length - 1]['column'], setNewLimit)
       let newColumnLimit = limit.filter(column => newLimit.includes(column))
       setLimit(newColumnLimit);
-      console.log('row 3 limit ', limit)
+      console.log('length + 1 limit ', limit)
     }
-    }
-  
+  }
 
   //generate random number
   useEffect(() => {
-    console.log(selectedCells);
    if (selectedCells.length === 4) {
     setTotal(Math.floor(Math.random() * 100) + 1);
    }
