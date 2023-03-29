@@ -12,6 +12,17 @@ export default function BasicTable() {
   const [limit, setLimit] = useState([])
   const [newLimit, setNewLimit] = useState([])
   
+  const headers = [
+    'Column 1',
+    'Column 2',
+    'Column 3',
+    'Column 4',
+    'Column 5',
+    'Column 6',
+    'Column 7',
+    'Column 8',
+    'Column 9',
+  ]
   const rows = [
     1,
     2,
@@ -99,15 +110,9 @@ export default function BasicTable() {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow >
-            <TableCell align="center">Column 1</TableCell>
-            <TableCell align="center">Column 2</TableCell>
-            <TableCell align="center">Column 3</TableCell>
-            <TableCell align="center">Column 4</TableCell>
-            <TableCell align="center">Column 5</TableCell>
-            <TableCell align="center">Column 6</TableCell>
-            <TableCell align="center">Column 7</TableCell>
-            <TableCell align="center">Column 8</TableCell>
-            <TableCell align="center">Column 9</TableCell>
+            {headers.map(header => {
+            return <TableCell align="center">{header}</TableCell>
+            })} 
           </TableRow>
         </TableHead>
         <TableBody>
