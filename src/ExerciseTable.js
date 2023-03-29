@@ -44,14 +44,14 @@ export default function BasicTable() {
           let idOfCell = selectedCells.indexOf(cell);
           //filter the id
           newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-          if (rowIndex !== 3) {
+          if (rowIndex !== 3  && newSelectedCells.length !== 0) {
             checkLimit(newSelectedCells);
           }
           return setSelectedCells(newSelectedCells);
         }
       }
       newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
-      if (rowIndex !== 3) {
+      if (rowIndex !== 3 && newSelectedCells.length !== 0) {
         checkLimit(newSelectedCells);
       }
       return setSelectedCells(newSelectedCells);
@@ -64,7 +64,6 @@ export default function BasicTable() {
       selectedCells.forEach(cell => {
         if (rowId === 3) {
             classes = classes.replace('hover', 'highlight');
-        
           if (cell.row === rowId && cell.column === columnId) {
             classes = classes.replace('highlight', 'active');
           }
@@ -90,32 +89,31 @@ export default function BasicTable() {
 
   //save limitation
   function createLimit(collumnCell, limitfunction) {
+    let limitList = [];
       if (collumnCell === 6) {
-        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1]);
+        limitList = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
       } if (collumnCell === 7) {
-        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell]);
+        limitList = [collumnCell - 2, collumnCell - 1, collumnCell];
       } if (collumnCell === 9) {
-        limitfunction([collumnCell])
+        limitList = [collumnCell];
       } else {
-        limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2]);
+        limitList = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       }
+      return limitfunction(limitList);
   }
  
   //create limitation
   function checkLimit (cells) {
     if (cells.length === 1) {
-      console.log(cells[0]['row'])
       if (cells[0]['row'] === '3') {
         setLimit([]);
       }
       createLimit(cells[0]['column'], setLimit);
-      console.log('limit ', limit)
     }
     if (cells.length >= 2) {
       createLimit(cells[cells.length - 1]['column'], setNewLimit)
       let newColumnLimit = limit.filter(column => newLimit.includes(column))
       setLimit(newColumnLimit);
-      console.log('length + 1 limit ', limit)
     }
   }
 
@@ -123,6 +121,8 @@ export default function BasicTable() {
   useEffect(() => {
    if (selectedCells.length === 4) {
     setTotal(Math.floor(Math.random() * 100) + 1);
+   } else {
+    setTotal(0);
    }
   }, [selectedCells])
 
