@@ -52,6 +52,12 @@ export default function BasicTable() {
           return setSelectedCells(newSelectedCells);
         }
       }
+       /* //https://react.dev/learn/updating-arrays-in-state
+      selectedCells.push({column: columnIndex, row: rowIndex});
+      if (rowIndex !== 3) {
+        checkLimit(selectedCells);
+      }
+      return selectedCells */
       newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
       if (rowIndex !== 3) {
         checkLimit(newSelectedCells);
@@ -90,32 +96,36 @@ export default function BasicTable() {
     }
 
   //save limitation
-  function createLimit(collumnCell, limitfunction) {
+  function createLimit(collumnCell) {
       if (collumnCell === 6) {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
       } if (collumnCell === 7) {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell];
       } if (collumnCell === 9) {
-        return limitfunction([collumnCell]);
+        return [collumnCell];
       } else {
-        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2]);
+        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       }
   }
  
   //create limitation
   function checkLimit(cells) {
+    let limitValue;
     if (cells.length === 1) {
       if (cells[0]['row'] === 3) {
         console.log('hello')
-        setLimit([]);
+        limitValue = [0];
+        setLimit(limitValue)
+        console.log(limit)
+
       }
-      createLimit(cells[0]['column'], setLimit);
+      limitValue = createLimit(cells[0]['column']);
     }
-    if (cells.length >= 2) {
-      createLimit(cells[cells.length - 1]['column'], setNewLimit)
-      let newColumnLimit = limit.filter(column => newLimit.includes(column))
-      setLimit(newColumnLimit);
+    if (cells.length > 1) {
+      setNewLimit(createLimit(cells[cells.length - 1]['column']));
+      limitValue = limit.filter(column => newLimit.includes(column))
     }
+    return setLimit(limitValue)
   }
 
   //generate random number
