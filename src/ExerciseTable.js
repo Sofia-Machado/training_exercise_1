@@ -5,12 +5,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { Container } from '@mui/system';
 
 
 export default function BasicTable() {
   const [selectedCells, setSelectedCells] = useState([]);
-  const [limit, setLimit] = useState([])
-  const [newLimit, setNewLimit] = useState([])
+  const [limit, setLimit] = useState([]);
+  const [newLimit, setNewLimit] = useState([]);
+  const [total, setTotal] = useState('');
   
   const headers = [
     'Column 1',
@@ -42,12 +44,13 @@ export default function BasicTable() {
           let idOfCell = selectedCells.indexOf(cell);
           //filter the id
           newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
+          checkLimit(newSelectedCells);
           return setSelectedCells(newSelectedCells);
         }
       }
       newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
+      checkLimit(newSelectedCells);
       return setSelectedCells(newSelectedCells);
-
     }
   }
 
@@ -95,76 +98,85 @@ export default function BasicTable() {
   }
  
   //create limitation
-  useEffect(() => {
-    if (selectedCells.length > 0 && selectedCells[0]['row'] !== 3) {
-     createLimit(selectedCells[0]['column'], setLimit);
-   }
-   else {
-     setLimit([]);
-   }
-   if (selectedCells.length > 1) {
-     if (selectedCells[selectedCells.length - 1]['row'] !== 3) {
-       createLimit(selectedCells[selectedCells.length - 1]['column'], setNewLimit)
-       let newColumnLimit = limit.filter(column => newLimit.includes(column))
-       setLimit(newColumnLimit);
-       console.log('row 3 limit ', limit)
-     } else {
-      createLimit(selectedCells[selectedCells.length - 2]['column'], setNewLimit)
-       let newColumnLimit = limit.filter(column => newLimit.includes(column))
-       setLimit(newColumnLimit);
-       console.log('row 3 limit ', limit)
-     }
+  function checkLimit (cells) {
+    if (cells.length > 0 && cells[0]['row'] !== 3) {
+      createLimit(cells[0]['column'], setLimit);
     }
-    //check column id of the last selected cell
+    if (cells.length > 1) {
+      if (cells[cells.length - 1]['row'] !== 3) {
+        createLimit(cells[cells.length - 1]['column'], setNewLimit)
+        let newColumnLimit = limit.filter(column => newLimit.includes(column))
+        setLimit(newColumnLimit);
+        console.log('row 3 limit ', limit)
+      } else {
+       createLimit(cells[cells.length - 2]['column'], setNewLimit)
+        let newColumnLimit = limit.filter(column => newLimit.includes(column))
+        setLimit(newColumnLimit);
+        console.log('row 3 limit ', limit)
+      }
+     }
+  }
+
+  useEffect(() => {
+   if (selectedCells.length === 4) {
+    setTotal(Math.floor(Math.random() * 100) + 1);
+   }
   }, [selectedCells])
 
+
+
   return (
-    <TableContainer>
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow >
-            {headers.map((header, index) => {
-            return <TableCell align="center" key={index}>{header}</TableCell>
-            })} 
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, rowIndex) => {
-           return (
-                <TableRow
-                className={''}
-                  key={rowIndex}
-                >
-                  {row.map((cell, columnIndex) => {
-                    if (rowIndex === 3) {
-                      return (
-                        <TableCell align="center"
-                        key={columnIndex}
-                        className={isCellSelected(rowIndex, columnIndex)}
-                        onClick={(e) => {
-                            handleSelectedCells(e, columnIndex, rowIndex)
-                          
-                        }}>
-                          {cell}
-                        </TableCell>)
-                    }
-                  return (
-                    <TableCell align="center"
-                    key={columnIndex}
-                    className={limit.length === 0 || limit.includes(columnIndex) ? isCellSelected(rowIndex, columnIndex) : ''}
-                    onClick={(e) => {
-                      if (limit.length === 0 || limit.includes(columnIndex)) {
-                        handleSelectedCells(e, columnIndex, rowIndex)
+    <Container>
+    <h1>Select plan</h1>
+      <TableContainer>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow >
+              {headers.map((header, index) => {
+              return <TableCell align="center" key={index}>{header}</TableCell>
+              })} 
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, rowIndex) => {
+            return (
+                  <TableRow
+                  className={''}
+                    key={rowIndex}
+                  >
+                    {row.map((cell, columnIndex) => {
+                      if (rowIndex === 3) {
+                        return (
+                          <TableCell align="center"
+                          key={columnIndex}
+                          className={isCellSelected(rowIndex, columnIndex)}
+                          onClick={(e) => {
+                              handleSelectedCells(e, columnIndex, rowIndex)
+                          }}>
+                            {cell}
+                          </TableCell>)
                       }
-                    }}>
-                      {cell}
-                    </TableCell>)
-                  })}   
-                </TableRow>
-                )
-                })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                    return (
+                      <TableCell align="center"
+                      key={columnIndex}
+                      className={limit.length === 0 || limit.includes(columnIndex) ? isCellSelected(rowIndex, columnIndex) : ''}
+                      onClick={(e) => {
+                        if (limit.length === 0 || limit.includes(columnIndex)) {
+                          handleSelectedCells(e, columnIndex, rowIndex)
+                        }
+                      }}>
+                        {cell}
+                      </TableCell>)
+                    })}   
+                  </TableRow>
+                  )
+                  })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div className="total">
+        <h2>Total: <span id="total-result">${total}</span></h2>
+      </div>
+    </Container>
   );
 }

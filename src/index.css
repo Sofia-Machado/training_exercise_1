@@ -23,3 +23,10 @@ code {
 .hover:hover {
   background-color: lightblue;
 }
+
+h1 {
+  text-align: center;
+}
+
+.total {
+}
