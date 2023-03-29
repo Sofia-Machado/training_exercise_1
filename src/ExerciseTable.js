@@ -44,12 +44,16 @@ export default function BasicTable() {
           let idOfCell = selectedCells.indexOf(cell);
           //filter the id
           newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-          checkLimit(newSelectedCells);
+          if ((selectedCells[selectedCells.length - 1]['row'] !== 3)) {
+            checkLimit(newSelectedCells);
+          }
           return setSelectedCells(newSelectedCells);
         }
       }
       newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
-      checkLimit(newSelectedCells);
+      if (rowIndex !== 3) {
+        checkLimit(newSelectedCells);
+      }
       return setSelectedCells(newSelectedCells);
     }
   }
@@ -99,31 +103,25 @@ export default function BasicTable() {
  
   //create limitation
   function checkLimit (cells) {
-    if (cells.length > 0 && cells[0]['row'] !== 3) {
+    if (cells.length > 0) {
       createLimit(cells[0]['column'], setLimit);
     }
     if (cells.length > 1) {
-      if (cells[cells.length - 1]['row'] !== 3) {
-        createLimit(cells[cells.length - 1]['column'], setNewLimit)
-        let newColumnLimit = limit.filter(column => newLimit.includes(column))
-        setLimit(newColumnLimit);
-        console.log('row 3 limit ', limit)
-      } else {
-       createLimit(cells[cells.length - 2]['column'], setNewLimit)
-        let newColumnLimit = limit.filter(column => newLimit.includes(column))
-        setLimit(newColumnLimit);
-        console.log('row 3 limit ', limit)
-      }
-     }
-  }
+      createLimit(cells[cells.length - 1]['column'], setNewLimit)
+      let newColumnLimit = limit.filter(column => newLimit.includes(column))
+      setLimit(newColumnLimit);
+      console.log('row 3 limit ', limit)
+    }
+    }
+  
 
+  //generate random number
   useEffect(() => {
+    console.log(selectedCells);
    if (selectedCells.length === 4) {
     setTotal(Math.floor(Math.random() * 100) + 1);
    }
   }, [selectedCells])
-
-
 
   return (
     <Container>
