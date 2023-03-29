@@ -44,14 +44,16 @@ export default function BasicTable() {
           let idOfCell = selectedCells.indexOf(cell);
           //filter the id
           newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-          if (rowIndex !== 3  && newSelectedCells.length !== 0) {
+          if (rowIndex !== 3) {
             checkLimit(newSelectedCells);
+          } if (newSelectedCells.length === 0) {
+            setLimit([]);
           }
           return setSelectedCells(newSelectedCells);
         }
       }
       newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
-      if (rowIndex !== 3 && newSelectedCells.length !== 0) {
+      if (rowIndex !== 3) {
         checkLimit(newSelectedCells);
       }
       return setSelectedCells(newSelectedCells);
@@ -89,23 +91,22 @@ export default function BasicTable() {
 
   //save limitation
   function createLimit(collumnCell, limitfunction) {
-    let limitList = [];
       if (collumnCell === 6) {
-        limitList = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
+        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1]);
       } if (collumnCell === 7) {
-        limitList = [collumnCell - 2, collumnCell - 1, collumnCell];
+        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell]);
       } if (collumnCell === 9) {
-        limitList = [collumnCell];
+        return limitfunction([collumnCell]);
       } else {
-        limitList = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
+        return limitfunction([collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2]);
       }
-      return limitfunction(limitList);
   }
  
   //create limitation
-  function checkLimit (cells) {
+  function checkLimit(cells) {
     if (cells.length === 1) {
-      if (cells[0]['row'] === '3') {
+      if (cells[0]['row'] === 3) {
+        console.log('hello')
         setLimit([]);
       }
       createLimit(cells[0]['column'], setLimit);
