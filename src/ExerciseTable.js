@@ -11,7 +11,6 @@ import { Container } from '@mui/system';
 export default function BasicTable() {
   const [selectedCells, setSelectedCells] = useState([]);
   const [limit, setLimit] = useState([]);
-  const [newLimit, setNewLimit] = useState([]);
   const [total, setTotal] = useState('');
   
   const headers = [
@@ -34,96 +33,97 @@ export default function BasicTable() {
 
   //save selected cells
   function handleSelectedCells(e, columnIndex, rowIndex) {
+    if (limit.length > 0 && !limit.includes(columnIndex)) {
+      return;
+    }
     let newSelectedCells = [];
     //iterate through selected cells
-    if (e.target.className.includes('hover') || e.target.className.includes('active') || e.target.className.includes('highlight')) {
-      for (let cell of selectedCells) {
-        //if cell exists
-        if (cell.column === columnIndex && cell.row === rowIndex) {
-          //save id of the obj in the selectedCells array
-          let idOfCell = selectedCells.indexOf(cell);
-          //filter the id
-          newSelectedCells = selectedCells.filter(cell => selectedCells.indexOf(cell) !== idOfCell);
-          if (rowIndex !== 3) {
-            checkLimit(newSelectedCells);
-          } if (newSelectedCells.length === 0) {
-            setLimit([]);
-          }
-          return setSelectedCells(newSelectedCells);
+    for (let i = 0; i < selectedCells.length; i++) {
+      let cell = selectedCells[i];
+      if (rowIndex === cell.row && columnIndex !== cell.column) {
+        return;
+      }
+      //if cell exists
+      if (cell.column === columnIndex && cell.row === rowIndex) {
+        //filter the id
+        newSelectedCells = selectedCells.filter((cell, index) => index !== i);
+        //set limit
+        if (newSelectedCells.length === 0) {
+          setLimit([]);
+        } else {
+          checkLimit(newSelectedCells);
         }
+        return setSelectedCells(newSelectedCells);
       }
-       /* //https://react.dev/learn/updating-arrays-in-state
-      selectedCells.push({column: columnIndex, row: rowIndex});
-      if (rowIndex !== 3) {
-        checkLimit(selectedCells);
-      }
-      return selectedCells */
-      newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
-      if (rowIndex !== 3) {
-        checkLimit(newSelectedCells);
-      }
-      return setSelectedCells(newSelectedCells);
     }
+    newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
+    //set limit
+    //if (rowIndex !== 3) {
+      checkLimit(newSelectedCells);
+    //}
+    return setSelectedCells(newSelectedCells);
   }
 
     //check if cell is selected and return class
     function isCellSelected(rowId, columnId) {
       let classes = 'hover';
-      selectedCells.forEach(cell => {
-        if (rowId === 3) {
-            classes = classes.replace('hover', 'highlight');
-          if (cell.row === rowId && cell.column === columnId) {
-            classes = classes.replace('highlight', 'active');
-          }
-          if (cell.row === rowId && cell.column !== columnId) {
-            classes = classes.replace('highlight', '');
-          }
-        } else {
-          limit.forEach(id => {
-            if (id === columnId) {
-              classes = classes.replace('hover', 'highlight');
-            }
-            if (cell.row === rowId && cell.column === columnId) {
-              classes = classes.replace('highlight', 'active');
-            }
-            if (cell.row === rowId && cell.column !== columnId) {
-              classes = classes.replace('highlight', '');
-            }
-          })
+      //if last row and any other cell is selected
+      if (rowId === 3) {
+        if (selectedCells.length > 0) {
+          classes = 'highlight';
+          for (let cell of selectedCells) {
+            if (cell.row === rowId) {
+              classes = cell.column === columnId ? 'active' : '';
+            } 
+          } 
         }
-      })
+      } else {
+        // not the last row
+        if (limit.length > 0) {
+          // set 'highlight' if (and only if) within limits
+          classes = limit.includes(columnId) ? 'highlight' : '';
+          for (let cell of selectedCells) {
+            if (cell.row === rowId) {
+              classes = cell.column === columnId ? 'active' : '';
+            }
+          }
+        }
+      }
       return classes;
     }
 
   //save limitation
   function createLimit(collumnCell) {
+    let limitValue = [];
       if (collumnCell === 6) {
-        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
-      } if (collumnCell === 7) {
-        return [collumnCell - 2, collumnCell - 1, collumnCell];
-      } if (collumnCell === 9) {
-        return [collumnCell];
+        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
+      } else if (collumnCell === 7) {
+        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell];
+      } else if (collumnCell === 8) {
+        limitValue = [collumnCell];
       } else {
-        return [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
+        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       }
+    return limitValue;
   }
  
   //create limitation
   function checkLimit(cells) {
-    let limitValue;
+    let limitValue = [];
     if (cells.length === 1) {
-      if (cells[0]['row'] === 3) {
-        console.log('hello')
-        limitValue = [0];
-        setLimit(limitValue)
-        console.log(limit)
-
+      limitValue = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+      if (cells[0]['row'] !== 3) {
+        limitValue = createLimit(cells[0]['column']);
       }
-      limitValue = createLimit(cells[0]['column']);
-    }
-    if (cells.length > 1) {
-      setNewLimit(createLimit(cells[cells.length - 1]['column']));
-      limitValue = limit.filter(column => newLimit.includes(column))
+    } else if (cells.length > 1) {
+      //if first cell is the last row set limit to all
+      limitValue = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+      for (let cell of cells) {
+        if (cell.row !== 3) {
+          let newLimit = createLimit(cell.column);
+          limitValue = limitValue.filter(column => newLimit.includes(column));
+        }
+      }
     }
     return setLimit(limitValue)
   }
@@ -152,37 +152,23 @@ export default function BasicTable() {
           <TableBody>
             {rows.map((row, rowIndex) => {
             return (
-                  <TableRow
-                  className={''}
-                    key={rowIndex}
-                  >
-                    {row.map((cell, columnIndex) => {
-                      if (rowIndex === 3) {
-                        return (
-                          <TableCell align="center"
-                          key={columnIndex}
-                          className={isCellSelected(rowIndex, columnIndex)}
-                          onClick={(e) => {
-                              handleSelectedCells(e, columnIndex, rowIndex)
-                          }}>
-                            {cell}
-                          </TableCell>)
-                      }
-                    return (
-                      <TableCell align="center"
-                      key={columnIndex}
-                      className={limit.length === 0 || limit.includes(columnIndex) ? isCellSelected(rowIndex, columnIndex) : ''}
-                      onClick={(e) => {
-                        if (limit.length === 0 || limit.includes(columnIndex)) {
-                          handleSelectedCells(e, columnIndex, rowIndex)
-                        }
-                      }}>
-                        {cell}
-                      </TableCell>)
-                    })}   
-                  </TableRow>
-                  )
-                  })}
+              <TableRow
+              className={''}
+                key={rowIndex}
+              >
+                {row.map((cell, columnIndex) => {
+                  return (
+                    <TableCell align="center"
+                    key={columnIndex}
+                    className={isCellSelected(rowIndex, columnIndex)}
+                    onClick={(e) => {
+                        handleSelectedCells(e, columnIndex, rowIndex)}}>
+                      {cell}
+                    </TableCell>)
+                  })}   
+                </TableRow>
+                )
+              })}
           </TableBody>
         </Table>
       </TableContainer>
