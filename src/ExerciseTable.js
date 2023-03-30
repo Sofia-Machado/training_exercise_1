@@ -95,14 +95,15 @@ export default function BasicTable() {
   //save limitation
   function createLimit(collumnCell) {
     let limitValue = [];
-      if (collumnCell === 6) {
-        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1];
-      } else if (collumnCell === 7) {
-        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell];
+    if (collumnCell !== 8) {
+      limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
+        for (let i = 0; i < limitValue.length; i++) {
+          if (limitValue[i] < 0 || limitValue[i] === 8) {
+            limitValue = limitValue.filter((v, vIndex) => vIndex !== i);
+          }
+        }
       } else if (collumnCell === 8) {
         limitValue = [collumnCell];
-      } else {
-        limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       }
     return limitValue;
   }
