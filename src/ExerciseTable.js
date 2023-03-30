@@ -5,6 +5,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import { Box } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Container } from '@mui/system';
 
 
@@ -140,7 +142,7 @@ export default function BasicTable() {
 
   return (
     <Container>
-    <h1>Select plan</h1>
+    <Typography component='h1' variant='h1' textAlign='center' mt={4} mb={3}>Select cells</Typography>
       <TableContainer>
         <Table aria-label="simple table">
           <TableHead>
@@ -173,9 +175,9 @@ export default function BasicTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="total">
-        <h2>Total: <span id="total-result">${total}</span></h2>
-      </div>
+      <Box>
+        <Typography component='h2' variant='h2' mt={3} ml={2}>Total: <span id="total-result">${total}</span></Typography>
+      </Box>
     </Container>
   );
 }
