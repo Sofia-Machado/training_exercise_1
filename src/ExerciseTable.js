@@ -125,6 +125,7 @@ export default function BasicTable() {
         }
       }
     }
+    console.log(limitValue);
     return setLimit(limitValue)
   }
 
