@@ -97,11 +97,15 @@ export default function BasicTable() {
     let limitValue = [];
     if (collumnCell !== 8) {
       limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
-        for (let i = 0; i < limitValue.length; i++) {
-          if (limitValue[i] < 0 || limitValue[i] === 8) {
-            limitValue = limitValue.filter((v, vIndex) => vIndex !== i);
+      let newLimit = [];
+      for (let i = 0; i < limitValue.length; i++) {
+          if (limitValue[i] < 0 || limitValue[i] > 7) {
+            newLimit.push(limitValue[i]);
           }
         }
+        newLimit.map(n => {
+          return limitValue = limitValue.filter(v => v !== n)
+        })
       } else if (collumnCell === 8) {
         limitValue = [collumnCell];
       }
