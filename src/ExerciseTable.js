@@ -33,7 +33,7 @@ export default function BasicTable() {
 
   //save selected cells
   function handleSelectedCells(e, columnIndex, rowIndex) {
-    if (limit.length > 0 && !limit.includes(columnIndex)) {
+    if (limit.length > 0 && !limit.includes(columnIndex) && rowIndex !== 3) {
       return;
     }
     let newSelectedCells = [];
