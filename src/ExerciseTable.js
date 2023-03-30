@@ -60,9 +60,7 @@ export default function BasicTable() {
     }
     newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
     //set limit
-    //if (rowIndex !== 3) {
       checkLimit(newSelectedCells);
-    //}
     return setSelectedCells(newSelectedCells);
   }
 
