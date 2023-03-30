@@ -176,7 +176,7 @@ export default function BasicTable() {
         </Table>
       </TableContainer>
       <Box>
-        <Typography component='h2' variant='h2' mt={3} ml={2}>Total: <span id="total-result">${total}</span></Typography>
+        <Typography component='h2' variant='h2' mt={3} ml={2}>Total: <span className={total > 0 ? 'total' : 'not-total'}>${total}</span></Typography>
       </Box>
     </Container>
   );
