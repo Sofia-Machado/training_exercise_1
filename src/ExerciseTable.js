@@ -34,7 +34,7 @@ export default function BasicTable() {
   ];
 
   //save selected cells
-  function handleSelectedCells(e, columnIndex, rowIndex) {
+  function handleSelectedCells(columnIndex, rowIndex) {
     if (limit.length > 0 && !limit.includes(columnIndex) && rowIndex !== 3) {
       return;
     }
@@ -60,7 +60,7 @@ export default function BasicTable() {
     }
     newSelectedCells = [...selectedCells, {'column': columnIndex, 'row': rowIndex}];
     //set limit
-      checkLimit(newSelectedCells);
+    checkLimit(newSelectedCells);
     return setSelectedCells(newSelectedCells);
   }
 
@@ -133,7 +133,6 @@ export default function BasicTable() {
         }
       }
     }
-    console.log(limitValue);
     return setLimit(limitValue)
   }
 
@@ -160,24 +159,24 @@ export default function BasicTable() {
           </TableHead>
           <TableBody>
             {rows.map((row, rowIndex) => {
-            return (
-              <TableRow
-              className={''}
-                key={rowIndex}
-              >
-                {row.map((cell, columnIndex) => {
-                  return (
-                    <TableCell align="center"
-                    key={columnIndex}
-                    className={isCellSelected(rowIndex, columnIndex)}
-                    onClick={(e) => {
-                        handleSelectedCells(e, columnIndex, rowIndex)}}>
-                      {cell}
-                    </TableCell>)
-                  })}   
-                </TableRow>
-                )
-              })}
+              return (
+                <TableRow
+                className={''}
+                  key={rowIndex}
+                >
+                  {row.map((cell, columnIndex) => {
+                    return (
+                      <TableCell align="center"
+                      key={columnIndex}
+                      className={isCellSelected(rowIndex, columnIndex)}
+                      onClick={() => {handleSelectedCells(columnIndex, rowIndex)}}>
+                        {cell}
+                      </TableCell>)
+                    })}   
+                  </TableRow>
+                  )
+                })
+              }
           </TableBody>
         </Table>
       </TableContainer>
