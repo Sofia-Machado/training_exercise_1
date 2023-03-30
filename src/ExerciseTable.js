@@ -118,6 +118,7 @@ export default function BasicTable() {
   function checkLimit(cells) {
     let limitValue = [];
     if (cells.length === 1) {
+      //if first cell is the last row set limit to all
       limitValue = [0, 1, 2, 3, 4, 5, 6, 7, 8];
       if (cells[0]['row'] !== 3) {
         limitValue = createLimit(cells[0]['column']);
