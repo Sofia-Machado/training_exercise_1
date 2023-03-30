@@ -98,11 +98,13 @@ export default function BasicTable() {
     if (collumnCell !== 8) {
       limitValue = [collumnCell - 2, collumnCell - 1, collumnCell, collumnCell + 1, collumnCell + 2];
       let newLimit = [];
+      //check if limit is bellow 0 or above 7
       for (let i = 0; i < limitValue.length; i++) {
           if (limitValue[i] < 0 || limitValue[i] > 7) {
             newLimit.push(limitValue[i]);
           }
         }
+        //filter those values
         newLimit.map(n => {
           return limitValue = limitValue.filter(v => v !== n)
         })
